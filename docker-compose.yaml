@@ -1,0 +1,26 @@
+version: "3.9"  # Update this as needed
+
+services:
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: yourdatabase
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    command: python app/app.py
+    volumes:
+      - .:/app
+    ports:
+
+      - "8000:8000"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
